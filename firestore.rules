@@ -1,0 +1,125 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Function to check if the user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Function to check if the user has a specific role
+    function hasRole(role) {
+      let userProfile = get(/databases/$(database)/documents/userProfiles/$(request.auth.uid)).data;
+      return userProfile.role == role;
+    }
+    
+    // Function to check if user has admin role
+    function isAdmin() {
+      return hasRole('admin');
+    }
+    
+    // Function to check if user is a provider or nurse
+    function isMedicalStaff() {
+      return hasRole('provider') || hasRole('nurse');
+    }
+    
+    // Function to check file size
+    function isValidFileSize(size) {
+      return size <= 5 * 1024 * 1024; // 5MB max
+    }
+    
+    // Function to check file type
+    function isValidImageType(contentType) {
+      return contentType.matches('image/.*');
+    }
+    
+    // User profiles can be read by any authenticated user
+    // But only admins can write to other users' profiles
+    match /userProfiles/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      allow update: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      allow delete: if isAdmin();
+    }
+    
+    // Patients can be read by any authenticated user
+    // But only medical staff and admins can write to patients
+    match /patients/{patientId} {
+      allow read: if isAuthenticated();
+      allow create, update: if isAuthenticated() && (isMedicalStaff() || isAdmin());
+      allow delete: if isAdmin();
+    }
+    
+    // Locations can be read by any authenticated user
+    // But only the system and admins can write locations
+    match /locations/{locationId} {
+      allow read: if isAuthenticated();
+      // Note: This would typically be updated by a Cloud Function
+      // triggered by the CCTV camera system, not directly by users
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Configuration can be read by any authenticated user
+    // But only admins can write to configuration
+    match /configuration/{configId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    // CCTV integration specific rules
+    match /cctv/{entryId} {
+      // All authenticated users can read CCTV metadata
+      allow read: if isAuthenticated();
+      
+      // Only admin and security roles can manage CCTV data
+      allow write: if isAuthenticated() && (isAdmin() || hasRole('security'));
+      
+      // Security rules for CCTV captured images
+      match /captures/{captureId} {
+        allow read: if isAuthenticated();
+        // Only allow writing of valid image files with proper metadata
+        allow create: if isAuthenticated() && 
+                      (isAdmin() || hasRole('security')) && 
+                      isValidImageType(request.resource.data.contentType) &&
+                      isValidFileSize(request.resource.data.size) &&
+                      request.resource.data.captureTime != null &&
+                      request.resource.data.cameraId != null &&
+                      request.resource.data.location != null;
+                      
+        allow update, delete: if isAuthenticated() && (isAdmin() || hasRole('security'));
+      }
+      
+      // Security rules for person identification data
+      match /identifications/{identificationId} {
+        allow read: if isAuthenticated();
+        
+        // Only allow writing with confidence score and timestamp
+        allow create: if isAuthenticated() && 
+                      (isAdmin() || hasRole('security')) &&
+                      request.resource.data.confidenceScore != null &&
+                      request.resource.data.timestamp != null &&
+                      request.resource.data.personType != null;
+                      
+        allow update, delete: if isAuthenticated() && (isAdmin() || hasRole('security'));
+      }
+    }
+    
+    // Security log entries
+    match /securityLogs/{logId} {
+      // Only admin and security roles can read security logs
+      allow read: if isAuthenticated() && (isAdmin() || hasRole('security'));
+      
+      // Only the system and admins can create security logs
+      // Note: This would typically be handled by Cloud Functions
+      allow create: if isAdmin();
+      
+      // No direct updates or deletes of security logs
+      allow update, delete: if false;
+    }
+    
+    // Default rule - deny everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
