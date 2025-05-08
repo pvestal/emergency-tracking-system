@@ -10,7 +10,12 @@ service cloud.firestore {
     // Function to check if the user has a specific role
     function hasRole(role) {
       let userProfile = get(/databases/$(database)/documents/userProfiles/$(request.auth.uid)).data;
-      return userProfile.role == role;
+      return userProfile.roles != null && userProfile.roles.hasAny([role]);
+    }
+    
+    // Function to check if user has any of the given roles
+    function hasAnyRole(roles) {
+      return roles.hasAny(roles.map(role => hasRole(role)));
     }
     
     // Function to check if user has admin role
@@ -20,7 +25,20 @@ service cloud.firestore {
     
     // Function to check if user is a provider or nurse
     function isMedicalStaff() {
-      return hasRole('provider') || hasRole('nurse');
+      return hasRole('physician') || hasRole('nurse');
+    }
+    
+    // Function to check if user can manage inventory
+    function canManageInventory() {
+      let userProfile = get(/databases/$(database)/documents/userProfiles/$(request.auth.uid)).data;
+      return isAdmin() || hasRole('inventory_manager') || userProfile.canManageInventory == true;
+    }
+    
+    // Function to check if user can access controlled substances
+    function canAccessControlledSubstances() {
+      let userProfile = get(/databases/$(database)/documents/userProfiles/$(request.auth.uid)).data;
+      return isAdmin() || hasRole('physician') || hasRole('pharmacist') || 
+             (hasRole('nurse') && userProfile.canAccessControlledSubstances == true);
     }
     
     // Function to check file size
@@ -115,6 +133,64 @@ service cloud.firestore {
       
       // No direct updates or deletes of security logs
       allow update, delete: if false;
+    }
+    
+    // Medical supplies inventory rules
+    match /medical_supplies/{supplyId} {
+      // Any authenticated user can read medical supplies
+      allow read: if isAuthenticated();
+      
+      // Only users who can manage inventory can create/update supplies
+      allow create, update: if isAuthenticated() && canManageInventory() && 
+                             request.resource.data.name != null &&
+                             request.resource.data.category != null &&
+                             request.resource.data.currentQuantity != null &&
+                             request.resource.data.minimumQuantity != null &&
+                             request.resource.data.criticalQuantity != null &&
+                             request.resource.data.unit != null &&
+                             request.resource.data.lastUpdated != null;
+      
+      // Only admins can delete supplies (soft deletion preferred via status change)
+      allow delete: if isAdmin();
+      
+      // Validate controlled substances can only be updated by authorized users
+      allow update: if isAuthenticated() && 
+                      resource.data.isControlled == true && 
+                      canAccessControlledSubstances() &&
+                      canManageInventory();
+    }
+    
+    // Supply transactions rules
+    match /supply_transactions/{transactionId} {
+      // Any authenticated user can read transactions
+      allow read: if isAuthenticated();
+      
+      // Transactions should generally be created by cloud functions
+      // But we'll allow direct creation with proper validation
+      allow create: if isAuthenticated() && 
+                     request.resource.data.supplyId != null &&
+                     request.resource.data.supplyName != null &&
+                     request.resource.data.transactionType != null &&
+                     request.resource.data.quantity > 0 &&
+                     request.resource.data.previousQuantity != null &&
+                     request.resource.data.newQuantity != null &&
+                     request.resource.data.timestamp != null &&
+                     request.resource.data.userId == request.auth.uid;
+      
+      // For controlled substances, additional checks
+      allow create: if isAuthenticated() &&
+                     request.resource.data.supplyId != null &&
+                     get(/databases/$(database)/documents/medical_supplies/$(request.resource.data.supplyId)).data.isControlled == true &&
+                     canAccessControlledSubstances();
+      
+      // No direct updates or deletes of transactions
+      allow update, delete: if false;
+    }
+    
+    // Audit logs - can only be read by admins, created by system
+    match /audit_logs/{logId} {
+      allow read: if isAdmin();
+      allow create, update, delete: if false; // Should only be modified by Cloud Functions
     }
     
     // Default rule - deny everything else
