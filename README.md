@@ -12,7 +12,7 @@ A web-based application for tracking patients in an emergency department setting
 ## Installation
 
 ### Prerequisites
-- Node.js (v14 or higher)
+- Node.js (v18 or higher)
 - Firebase account (for authentication and database)
 
 ### Setup
@@ -62,13 +62,21 @@ The system supports the following user roles with different permissions:
 ## Technologies
 - **Frontend**: Vue.js 3, TypeScript, Pinia (state management)
 - **Backend**: Firebase (Authentication, Firestore, Cloud Functions)
-- **Deployment**: Firebase Hosting
+- **Deployment**: Vercel
 - **Development**: Vue CLI, ESLint
 
 ## Documentation
 - [User Guide](./docs/USER_GUIDE.md) - Guide for end users
 - [Admin Guide](./docs/ADMIN_GUIDE.md) - Guide for system administrators
 - [Developer Guide](./docs/DEVELOPER_GUIDE.md) - Technical guide for developers
+
+## Deployment
+### Vercel Deployment
+This project is configured for deployment on Vercel:
+
+1. Connect your GitHub repository to Vercel
+2. Add all Firebase environment variables in the Vercel project settings
+3. Vercel will automatically detect the Vue.js framework and use the correct build settings
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.

@@ -57,6 +57,13 @@
             </button>
             <button
               class="tab-button"
+              :class="{ active: activeTab === 'activity' }"
+              @click="activeTab = 'activity'"
+            >
+              Activity Logs
+            </button>
+            <button
+              class="tab-button"
               :class="{ active: activeTab === 'settings' }"
               @click="activeTab = 'settings'"
             >
@@ -65,6 +72,7 @@
           </div>
 
           <AdminDashboard v-if="activeTab === 'dashboard'" />
+          <ActivityLogs v-else-if="activeTab === 'activity'" />
           <SystemSettings v-else-if="activeTab === 'settings'" />
         </div>
       </main>
@@ -77,6 +85,7 @@ import { defineComponent, computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import AdminDashboard from '@/components/AdminDashboard.vue';
 import SystemSettings from '@/components/SystemSettings.vue';
+import ActivityLogs from '@/components/ActivityLogs.vue';
 import { useAuthStore } from '@/stores/auth';
 import { useUserProfileStore } from '@/stores/userProfile';
 
@@ -84,7 +93,8 @@ export default defineComponent({
   name: 'AdminView',
   components: {
     AdminDashboard,
-    SystemSettings
+    SystemSettings,
+    ActivityLogs
   },
   
   setup() {

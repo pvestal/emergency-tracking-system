@@ -31,3 +31,5 @@ Documents/
 # Or if you want to exclude specific directories inside Documents
 Documents/personal/
 Documents/unrelated-files/
+
+**/.claude/settings.local.json

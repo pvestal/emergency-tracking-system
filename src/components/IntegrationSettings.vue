@@ -174,7 +174,7 @@
               <textarea 
                 id="settings" 
                 v-model="settingsJson"
-                placeholder="{ \"key\": \"value\" }"
+                placeholder='{ "key": "value" }'
                 rows="4"
               ></textarea>
               <div v-if="jsonError" class="field-error">{{ jsonError }}</div>

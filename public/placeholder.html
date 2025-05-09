@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Tracking System - Development Version</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .header {
+      background-color: #005a9c;
+      color: white;
+      padding: 20px;
+      border-radius: 5px;
+      margin-bottom: 30px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+    .card {
+      background-color: #f8f9fa;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .info {
+      color: #0c5460;
+      background-color: #d1ecf1;
+      border-color: #bee5eb;
+    }
+    .warning {
+      color: #856404;
+      background-color: #fff3cd;
+      border-color: #ffeeba;
+    }
+    .card h3 {
+      margin-top: 0;
+    }
+    code {
+      background-color: #f1f1f1;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-family: Consolas, Monaco, 'Andale Mono', monospace;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    .firebase-setup {
+      background-color: #e8f5e9;
+      border-color: #c8e6c9;
+      padding: 20px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Emergency Department Tracking System</h1>
+    <p>Development Environment</p>
+  </div>
+
+  <div class="card info">
+    <h3>Local Development Setup</h3>
+    <p>This is a placeholder page for the local development server. The full application requires:</p>
+    <ul>
+      <li>A built Vue.js application</li>
+      <li>Firebase configuration</li>
+      <li>Proper environment variables</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Next Steps</h3>
+    <ol>
+      <li>Complete your Firebase configuration in <code>.env.local</code></li>
+      <li>Run <code>npm run serve</code> to start the full development server</li>
+      <li>Or run <code>npm run build</code> followed by <code>npm run dev</code> for an optimized version</li>
+    </ol>
+  </div>
+
+  <div class="card warning">
+    <h3>Environment Variables</h3>
+    <p>Make sure your <code>.env.local</code> file contains the following Firebase configuration:</p>
+    <pre>
+VUE_APP_FIREBASE_API_KEY=your-api-key
+VUE_APP_FIREBASE_AUTH_DOMAIN=your-project-id.firebaseapp.com
+VUE_APP_FIREBASE_PROJECT_ID=your-project-id
+VUE_APP_FIREBASE_STORAGE_BUCKET=your-project-id.appspot.com
+VUE_APP_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
+VUE_APP_FIREBASE_APP_ID=your-app-id
+    </pre>
+  </div>
+
+  <div class="firebase-setup">
+    <h3>Firebase Setup</h3>
+    <p>For working with Firebase locally:</p>
+    <ol>
+      <li>Create a Firebase project at <a href="https://console.firebase.google.com/">console.firebase.google.com</a></li>
+      <li>Enable Authentication with Google and GitHub providers</li>
+      <li>Create a Firestore database with appropriate security rules</li>
+      <li>Add a web app to your Firebase project to get configuration values</li>
+    </ol>
+  </div>
+</body>
+</html>

@@ -11,6 +11,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '@/firebase/config';
 import { useAuthStore } from './auth';
+import { logService } from '@/services/logService';
 
 export type UserRole = 'admin' | 'provider' | 'nurse' | 'receptionist' | 'viewer';
 
@@ -169,22 +170,30 @@ export const useUserProfileStore = defineStore('userProfile', {
       this.error = null;
 
       try {
+        // Get the current user profile to record the change
         const profileRef = doc(db, 'userProfiles', userId);
+        const profileSnap = await getDoc(profileRef);
+        const oldRole = profileSnap.exists() ? profileSnap.data().role : null;
+
+        // Update the role
         await updateDoc(profileRef, { role });
 
-        // Add system activity record for the role change
-        try {
-          const activityRef = collection(db, 'systemActivity');
-          await setDoc(doc(activityRef), {
-            type: 'user',
-            message: `User role updated to ${role}`,
-            userId: userId,
-            updatedBy: this.profile?.id,
-            timestamp: serverTimestamp()
-          });
-        } catch (activityErr: any) {
-          console.error('Error recording role change activity:', activityErr);
-          // Non-critical error, don't throw
+        // Log user role change
+        await logService.logUserAction(
+          'update role',
+          userId,
+          { oldRole, newRole: role }
+        );
+
+        // Log admin action for audit trail
+        const authStore = useAuthStore();
+        if (authStore.userId) {
+          await logService.logAdminAction(
+            'change role',
+            'user',
+            userId,
+            { oldRole, newRole: role }
+          );
         }
       } catch (err: any) {
         this.error = err.message;
