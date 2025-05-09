@@ -157,10 +157,8 @@ import {
   collection, 
   query, 
   onSnapshot, 
-  getDoc, 
   doc,
-  updateDoc,
-  where
+  updateDoc
 } from 'firebase/firestore';
 import { db } from '@/firebase/config';
 import { useUserProfileStore, type UserProfile, type UserRole } from '@/stores/userProfile';

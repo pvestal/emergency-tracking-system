@@ -55,6 +55,36 @@ const routes: Array<RouteRecordRaw> = [
     name: 'integrations',
     component: () => import(/* webpackChunkName: "integrations" */ '../views/IntegrationsView.vue'),
     meta: { requiresAuth: true, requiresAdmin: true }
+  },
+  {
+    path: '/medical-supplies',
+    name: 'medical-supplies',
+    component: () => import(/* webpackChunkName: "medical-supplies" */ '../views/MedicalSuppliesView.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/helpdesk',
+    name: 'helpdesk',
+    component: () => import(/* webpackChunkName: "helpdesk" */ '../views/HelpdeskView.vue'),
+    meta: { requiresAuth: true, requiresAdmin: true }
+  },
+  {
+    path: '/support',
+    name: 'support',
+    component: () => import(/* webpackChunkName: "support" */ '../views/SupportView.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/security-audit',
+    name: 'security-audit',
+    component: () => import(/* webpackChunkName: "security-audit" */ '../views/SecurityAuditView.vue'),
+    meta: { requiresAuth: true, requiresAdmin: true }
+  },
+  {
+    path: '/payment-processing',
+    name: 'payment-processing',
+    component: () => import(/* webpackChunkName: "payment-processing" */ '../views/PaymentProcessingView.vue'),
+    meta: { requiresAuth: true, requiresAdmin: true }
   }
 ]
 

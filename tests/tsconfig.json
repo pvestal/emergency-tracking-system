@@ -1,0 +1,21 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": [
+      "jest",
+      "@testing-library/jest-dom"
+    ],
+    "typeRoots": [
+      "../node_modules/@types",
+      "./unit"
+    ]
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "unit/jest-globals.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

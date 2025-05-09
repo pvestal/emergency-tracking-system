@@ -1,7 +1,8 @@
 module.exports = {
   preset: '@vue/cli-plugin-unit-jest/presets/typescript-and-babel',
   transform: {
-    '^.+\\.vue$': '@vue/vue3-jest'
+    '^.+\\.vue$': '@vue/vue3-jest',
+    '^.+\\.tsx?$': 'ts-jest'
   },
   testMatch: [
     '**/__tests__/**/*.spec.[jt]s?(x)',
@@ -21,5 +22,13 @@ module.exports = {
   coverageReporters: ['text', 'lcov'],
   transformIgnorePatterns: [
     '/node_modules/(?!(@firebase|firebase)/)'
-  ]
+  ],
+  setupFilesAfterEnv: [
+    '<rootDir>/tests/setup.js'
+  ],
+  globals: {
+    'ts-jest': {
+      tsconfig: '<rootDir>/tests/tsconfig.json'
+    }
+  }
 };

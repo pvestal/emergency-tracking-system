@@ -174,7 +174,7 @@
               <textarea 
                 id="settings" 
                 v-model="settingsJson"
-                placeholder="{ \"key\": \"value\" }"
+                placeholder='{ "key": "value" }'
                 rows="4"
               ></textarea>
               <div v-if="jsonError" class="field-error">{{ jsonError }}</div>
@@ -323,7 +323,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, onMounted } from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
 import { useUserProfileStore } from '@/stores/userProfile';
 import { useIntegrationConfigStore, type ExternalSystem } from '@/stores/integrationConfig';
 import { httpsCallable, getFunctions } from 'firebase/functions';
@@ -348,7 +348,17 @@ export default defineComponent({
     
     // Connection testing state
     const testingConnection = ref(false);
-    const connectionTest = ref({
+    
+    // Define a type for the connection test result
+    interface ConnectionTestResult {
+      loading: boolean;
+      success: boolean;
+      error: string;
+      systemName: string;
+      details: null | Record<string, any>;
+    }
+    
+    const connectionTest = ref<ConnectionTestResult>({
       loading: false,
       success: false,
       error: '',
@@ -526,7 +536,7 @@ export default defineComponent({
           success: true,
           error: '',
           systemName: system.name,
-          details: result.data
+          details: result.data as Record<string, any>
         };
         
         // Update last sync time in Firestore
