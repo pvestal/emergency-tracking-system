@@ -1,0 +1,449 @@
+/* Theme Variables */
+
+/* Light Theme (Default) */
+:root,
+.light-theme {
+  /* Base Colors */
+  --color-background: #f8f9fa;
+  --color-surface: #ffffff;
+  --color-surface-variant: #f0f0f0;
+  --color-on-surface: #212121;
+  --color-on-surface-medium: #666666;
+  --color-on-surface-subdued: #888888;
+  --color-divider: #e0e0e0;
+  --color-border: #dddddd;
+
+  /* Primary Colors */
+  --color-primary: #2196F3;
+  --color-primary-dark: #1976D2;
+  --color-primary-light: #BBDEFB;
+  --color-on-primary: #ffffff;
+
+  /* Secondary Colors */
+  --color-secondary: #4CAF50;
+  --color-secondary-dark: #388E3C;
+  --color-secondary-light: #C8E6C9;
+  --color-on-secondary: #ffffff;
+
+  /* Accent Colors */
+  --color-accent: #FF9800;
+  --color-accent-dark: #F57C00;
+  --color-accent-light: #FFE0B2;
+  --color-on-accent: #ffffff;
+
+  /* Severity Colors */
+  --color-critical: #F44336;
+  --color-critical-bg: #FFEBEE;
+  --color-critical-border: #EF9A9A;
+  --color-on-critical: #C62828;
+
+  --color-severe: #FF9800;
+  --color-severe-bg: #FFF3E0;
+  --color-severe-border: #FFCC80;
+  --color-on-severe: #E65100;
+
+  --color-moderate: #FFEB3B;
+  --color-moderate-bg: #FFFDE7;
+  --color-moderate-border: #FFF59D;
+  --color-on-moderate: #F57F17;
+
+  --color-minor: #4CAF50;
+  --color-minor-bg: #E8F5E9;
+  --color-minor-border: #A5D6A7;
+  --color-on-minor: #2E7D32;
+
+  /* Special States */
+  --color-error: #F44336;
+  --color-warning: #FF9800;
+  --color-success: #4CAF50;
+  --color-info: #2196F3;
+
+  /* Isolation Colors */
+  --color-isolation: #FFC107;
+  --color-isolation-bg: #FFF8E1;
+  --color-isolation-border: #FFECB3;
+  --color-on-isolation: #FF6F00;
+
+  /* Special Areas */
+  --color-trauma: #F44336;
+  --color-trauma-bg: #FFEBEE;
+  --color-pediatric: #9C27B0;
+  --color-pediatric-bg: #F3E5F5;
+  --color-respiratory: #00BCD4;
+  --color-respiratory-bg: #E0F7FA;
+  --color-cardiac: #F44336;
+  --color-cardiac-bg: #FFEBEE;
+  --color-behavioral: #9C27B0;
+  --color-behavioral-bg: #F3E5F5;
+
+  /* Typography */
+  --font-family: 'Roboto', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  --font-size-base: 16px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  
+  /* Elevations & Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 8px 16px rgba(0, 0, 0, 0.2);
+  
+  /* Border Radius */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  --border-radius-pill: 999px;
+  
+  /* Transitions */
+  --transition-fast: 0.1s ease;
+  --transition-normal: 0.2s ease;
+  --transition-slow: 0.4s ease;
+}
+
+/* Dark Theme */
+.dark-theme {
+  /* Base Colors */
+  --color-background: #121212;
+  --color-surface: #1e1e1e;
+  --color-surface-variant: #2c2c2c;
+  --color-on-surface: #e0e0e0;
+  --color-on-surface-medium: #b0b0b0;
+  --color-on-surface-subdued: #909090;
+  --color-divider: #333333;
+  --color-border: #444444;
+
+  /* Primary Colors */
+  --color-primary: #90CAF9;
+  --color-primary-dark: #64B5F6;
+  --color-primary-light: #BBDEFB;
+  --color-on-primary: #0d47a1;
+
+  /* Secondary Colors */
+  --color-secondary: #81C784;
+  --color-secondary-dark: #66BB6A;
+  --color-secondary-light: #A5D6A7;
+  --color-on-secondary: #1b5e20;
+
+  /* Accent Colors */
+  --color-accent: #FFB74D;
+  --color-accent-dark: #FFA726;
+  --color-accent-light: #FFCC80;
+  --color-on-accent: #e65100;
+
+  /* Severity Colors */
+  --color-critical: #EF5350;
+  --color-critical-bg: #471515;
+  --color-critical-border: #B71C1C;
+  --color-on-critical: #FFCDD2;
+
+  --color-severe: #FFA726;
+  --color-severe-bg: #4D3614;
+  --color-severe-border: #E65100;
+  --color-on-severe: #FFE0B2;
+
+  --color-moderate: #FFEE58;
+  --color-moderate-bg: #4D4815;
+  --color-moderate-border: #F57F17;
+  --color-on-moderate: #FFF9C4;
+
+  --color-minor: #66BB6A;
+  --color-minor-bg: #1B3A1C;
+  --color-minor-border: #2E7D32;
+  --color-on-minor: #C8E6C9;
+
+  /* Special States */
+  --color-error: #EF5350;
+  --color-warning: #FFA726;
+  --color-success: #66BB6A;
+  --color-info: #64B5F6;
+
+  /* Isolation Colors */
+  --color-isolation: #FFD54F;
+  --color-isolation-bg: #4D3B10;
+  --color-isolation-border: #FFB300;
+  --color-on-isolation: #FFF8E1;
+
+  /* Special Areas */
+  --color-trauma: #EF5350;
+  --color-trauma-bg: #471515;
+  --color-pediatric: #CE93D8;
+  --color-pediatric-bg: #322037;
+  --color-respiratory: #4DD0E1;
+  --color-respiratory-bg: #053A40;
+  --color-cardiac: #EF5350;
+  --color-cardiac-bg: #471515;
+  --color-behavioral: #CE93D8;
+  --color-behavioral-bg: #322037;
+
+  /* Shadows for dark theme (less opacity) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.25);
+  --shadow-xl: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Apply theme to core elements */
+body {
+  background-color: var(--color-background);
+  color: var(--color-on-surface);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+/* Theme the scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface-variant);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-on-surface-subdued);
+  border-radius: var(--border-radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-on-surface-medium);
+}
+
+/* Transition for theme changes */
+* {
+  transition: background-color var(--transition-normal), border-color var(--transition-normal);
+}
+
+/* ===== Reusable Theme Classes ===== */
+
+/* Background Colors */
+.bg-surface {
+  background-color: var(--color-surface);
+}
+
+.bg-surface-variant {
+  background-color: var(--color-surface-variant);
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-on-secondary);
+}
+
+.bg-critical {
+  background-color: var(--color-critical-bg);
+  color: var(--color-on-critical);
+}
+
+.bg-severe {
+  background-color: var(--color-severe-bg);
+  color: var(--color-on-severe);
+}
+
+.bg-moderate {
+  background-color: var(--color-moderate-bg);
+  color: var(--color-on-moderate);
+}
+
+.bg-minor {
+  background-color: var(--color-minor-bg);
+  color: var(--color-on-minor);
+}
+
+.bg-isolation {
+  background-color: var(--color-isolation-bg);
+  color: var(--color-on-isolation);
+}
+
+/* Text Colors */
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-secondary {
+  color: var(--color-secondary);
+}
+
+.text-critical {
+  color: var(--color-critical);
+}
+
+.text-severe {
+  color: var(--color-severe);
+}
+
+.text-moderate {
+  color: var(--color-moderate);
+}
+
+.text-minor {
+  color: var(--color-minor);
+}
+
+.text-subdued {
+  color: var(--color-on-surface-subdued);
+}
+
+/* Borders */
+.border {
+  border: 1px solid var(--color-border);
+}
+
+.border-primary {
+  border-color: var(--color-primary);
+}
+
+.border-critical {
+  border-color: var(--color-critical-border);
+}
+
+.border-severe {
+  border-color: var(--color-severe-border);
+}
+
+.border-moderate {
+  border-color: var(--color-moderate-border);
+}
+
+.border-minor {
+  border-color: var(--color-minor-border);
+}
+
+.border-isolation {
+  border-color: var(--color-isolation-border);
+}
+
+/* Shadows */
+.shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.shadow-md {
+  box-shadow: var(--shadow-md);
+}
+
+.shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+.shadow-xl {
+  box-shadow: var(--shadow-xl);
+}
+
+/* Badge classes */
+.badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius-pill);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-medium);
+}
+
+.badge-critical {
+  background-color: var(--color-critical-bg);
+  color: var(--color-on-critical);
+}
+
+.badge-severe {
+  background-color: var(--color-severe-bg);
+  color: var(--color-on-severe);
+}
+
+.badge-moderate {
+  background-color: var(--color-moderate-bg);
+  color: var(--color-on-moderate);
+}
+
+.badge-minor {
+  background-color: var(--color-minor-bg);
+  color: var(--color-on-minor);
+}
+
+.badge-isolation {
+  background-color: var(--color-isolation-bg);
+  color: var(--color-on-isolation);
+}
+
+/* Card Style */
+.card {
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+/* Button Styles */
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-sm);
+  font-weight: var(--font-weight-medium);
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-on-secondary);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-secondary-dark);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-on-surface);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-surface-variant);
+}
+
+/* Form Elements */
+input, select, textarea {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-on-surface);
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+/* Modal */
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+}
+
+/* Progress indicators */
+.loading-spinner {
+  border-top-color: var(--color-primary);
+}

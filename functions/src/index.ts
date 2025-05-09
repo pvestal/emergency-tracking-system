@@ -1,6 +1,13 @@
-import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
-import * as logger from 'firebase-functions/logger';
+import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
+import * as logger from "firebase-functions/logger";
+
+// Import helpdesk functions
+import * as helpdesk from './helpdesk';
+// Import security audit functions
+import * as securityAudit from './security-audit';
+// Import payment processing functions
+import * as paymentProcessing from './payment-processing';
 
 // Initialize Firebase Admin
 admin.initializeApp();
@@ -1366,3 +1373,33 @@ export const onSupplyUpdate = functions.firestore
       return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
     }
   });
+
+// Export helpdesk functions
+export const createSupportTicket = helpdesk.createSupportTicket;
+export const addTicketResponse = helpdesk.addTicketResponse;
+export const updateTicketStatus = helpdesk.updateTicketStatus;
+export const getAdminTickets = helpdesk.getAdminTickets;
+export const getUserTickets = helpdesk.getUserTickets;
+export const getTicketDetails = helpdesk.getTicketDetails;
+export const getAdminUsers = helpdesk.getAdminUsers;
+export const checkStaleTickets = helpdesk.checkStaleTickets;
+export const getHelpdeskStats = helpdesk.getHelpdeskStats;
+
+// Export security audit functions
+export const getAuditLogs = securityAudit.getAuditLogs;
+export const exportAuditLogs = securityAudit.exportAuditLogs;
+export const logUserLogin = securityAudit.logUserLogin;
+export const logUserLogout = securityAudit.logUserLogout;
+export const logLoginFailure = securityAudit.logLoginFailure;
+export const onUserCreated = securityAudit.onUserCreated;
+export const onUserDeleted = securityAudit.onUserDeleted;
+export const onUserProfileUpdate = securityAudit.onUserProfileUpdate;
+export const purgeOldAuditLogs = securityAudit.purgeOldAuditLogs;
+
+// Export payment processing functions
+export const processPayment = paymentProcessing.processPayment;
+export const stripeWebhook = paymentProcessing.stripeWebhook;
+export const getPaymentHistory = paymentProcessing.getPaymentHistory;
+export const getAdminPayments = paymentProcessing.getAdminPayments;
+export const refundPayment = paymentProcessing.refundPayment;
+export const getPaymentStats = paymentProcessing.getPaymentStats;

@@ -1,6 +1,6 @@
 import { httpsCallable, getFunctions } from 'firebase/functions';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { collection, query, getDocs, where, addDoc, Timestamp, DocumentReference } from 'firebase/firestore';
+import { collection, addDoc, Timestamp, DocumentReference } from 'firebase/firestore';
 import { db } from '@/firebase/config';
 
 // Initialize Firebase Functions
@@ -69,8 +69,12 @@ export default class ExternalIntegrationService {
       const fetchPatientFunction = httpsCallable(functions, 'fetchPatientFromEMR');
       const result = await fetchPatientFunction({ mrn });
       
+      // Safely extract the patientId with proper type checking
+      const resultData = result.data as { patientId?: string } | null;
+      const patientId = resultData?.patientId || 'unknown';
+      
       // Log the integration activity
-      await this.logIntegrationActivity('EMR_IMPORT', result.data?.patientId || 'unknown', { mrn });
+      await this.logIntegrationActivity('EMR_IMPORT', patientId, { mrn });
       
       return result.data;
     } catch (error) {
@@ -175,11 +179,14 @@ export default class ExternalIntegrationService {
         preferredDate: preferredDate.toISOString()
       });
       
+      // Safely extract the appointment date
+      const resultData = result.data as { appointmentDate?: string } | null;
+      
       // Log the appointment scheduling
       await this.logIntegrationActivity('APPOINTMENT_SCHEDULED', patientId, {
         departmentId,
         appointmentType,
-        appointmentDate: result.data?.appointmentDate
+        appointmentDate: resultData?.appointmentDate || null
       });
       
       return result.data;
@@ -195,7 +202,7 @@ export default class ExternalIntegrationService {
    * @param daysBack Number of days to look back (default: 7)
    * @returns Promise with lab results
    */
-  static async getLabResults(patientId: string, daysBack: number = 7): Promise<any> {
+  static async getLabResults(patientId: string, daysBack = 7): Promise<any> {
     try {
       const getLabResultsFunction = httpsCallable(functions, 'getLabResults');
       const result = await getLabResultsFunction({
@@ -203,10 +210,14 @@ export default class ExternalIntegrationService {
         daysBack
       });
       
+      // Safely extract the results array with type checking
+      const resultData = result.data as { results?: any[] } | null;
+      const resultCount = resultData?.results?.length || 0;
+      
       // Log the lab results retrieval
       await this.logIntegrationActivity('LAB_RESULTS_RETRIEVAL', patientId, {
         daysBack,
-        resultCount: result.data?.results?.length || 0
+        resultCount
       });
       
       return result.data;

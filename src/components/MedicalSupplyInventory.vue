@@ -616,7 +616,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted, watch } from 'vue';
-import { useMedicalSuppliesStore, type MedicalSupply, type SupplyTransaction, type SupplyCategory, type SupplyStatus, type SupplyLocation, type SupplyUnit, type TransactionType } from '@/stores/medicalSupplies';
+import { useMedicalSuppliesStore, type MedicalSupply, type SupplyCategory, type SupplyStatus, type SupplyLocation, type SupplyUnit, type TransactionType } from '@/stores/medicalSupplies';
 import { useUserProfileStore } from '@/stores/userProfile';
 import { usePatientStore, type Patient } from '@/stores/patients';
 import { Timestamp } from 'firebase/firestore';

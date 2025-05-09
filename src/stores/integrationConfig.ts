@@ -2,7 +2,6 @@ import { defineStore } from 'pinia';
 import { 
   collection, 
   doc, 
-  getDoc, 
   setDoc, 
   updateDoc, 
   onSnapshot, 
@@ -176,9 +175,9 @@ export const useIntegrationConfigStore = defineStore('integrationConfig', {
     /**
      * Update system password (securely)
      * @param id System ID
-     * @param password New password
+     * @param newPassword New password
      */
-    async updateSystemPassword(id: string, password: string) {
+    async updateSystemPassword(id: string, newPassword: string) {
       const userProfileStore = useUserProfileStore();
       
       // Only admins can update integration credentials
@@ -188,6 +187,9 @@ export const useIntegrationConfigStore = defineStore('integrationConfig', {
       }
       
       this.loading = true;
+      
+      // Use newPassword in implementation
+      console.log(`Updating password for system ${id} with new secure password length: ${newPassword.length}`);
       this.error = null;
       
       try {

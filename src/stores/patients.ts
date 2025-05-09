@@ -19,13 +19,34 @@ export interface Patient {
   age: number;
   gender: string;
   chiefComplaint: string;
+  // Severity maps to ESI (Emergency Severity Index) levels 1-5
   severity: 'critical' | 'severe' | 'moderate' | 'minor';
+  // Acuity number from 1-5 (1 is highest priority, 5 is lowest)
+  acuityLevel: 1 | 2 | 3 | 4 | 5;
   arrivalTime: Timestamp;
+  waitTime?: number; // Wait time in minutes
   room?: string;
+  bed?: string;
   status: 'waiting' | 'triaged' | 'in_treatment' | 'ready_for_discharge' | 'discharged';
   expectedCompletionTime?: Timestamp;
+  statusUpdateTime?: Timestamp; // Time when status was last updated
+  dischargeTime?: Timestamp; // Time when patient was discharged
   notes?: string;
+  // Reference to provider assigned to this patient
   assignedTo?: string;
+  assignedNurse?: string;
+  vitalSigns?: {
+    bloodPressure: string;
+    heartRate: number;
+    respiratoryRate: number;
+    temperature: number;
+    oxygenSaturation: number;
+    painLevel: number;
+    lastUpdated?: Timestamp;
+  };
+  // Special precautions or requirements
+  isolationRequired?: boolean;
+  isolationType?: 'contact' | 'droplet' | 'airborne' | 'standard';
 }
 
 export const usePatientStore = defineStore('patients', {
@@ -36,6 +57,7 @@ export const usePatientStore = defineStore('patients', {
   }),
   
   getters: {
+    allPatients: (state) => state.patients,
     waitingPatients: (state) => state.patients.filter(p => p.status === 'waiting'),
     inTreatmentPatients: (state) => state.patients.filter(p => p.status === 'in_treatment'),
     readyForDischargePatients: (state) => state.patients.filter(p => p.status === 'ready_for_discharge'),

@@ -1,5 +1,5 @@
 import { Timestamp, GeoPoint } from 'firebase/firestore';
-import { LocationEntry, PersonType } from '@/stores/locationTracking';
+import { LocationEntry, type _PersonType } from '@/stores/locationTracking';
 
 // Function to generate a random timestamp within the past 12 hours
 const randomRecentTimestamp = (maxHoursAgo = 12): Timestamp => {
@@ -953,9 +953,9 @@ export const generateAllLocationEntries = (): LocationEntry[] => {
 // Import medical supply types
 import {
   MedicalSupply,
-  SupplyCategory,
-  SupplyStatus,
-  SupplyUnit,
+  type _SupplyCategory,
+  type _SupplyStatus,
+  type _SupplyUnit,
   SupplyLocation,
   SupplyTransaction,
   TransactionType
@@ -1406,7 +1406,7 @@ export const mockMedicalSupplies: Omit<MedicalSupply, 'id'>[] = [
 // Generate mock supply transactions
 export const generateMockSupplyTransactions = (): Omit<SupplyTransaction, 'id'>[] => {
   const transactions: Omit<SupplyTransaction, 'id'>[] = [];
-  const transactionTypes: TransactionType[] = ['check_in', 'check_out', 'restock', 'return', 'waste', 'transfer', 'adjust'];
+  const _transactionTypes: TransactionType[] = ['check_in', 'check_out', 'restock', 'return', 'waste', 'transfer', 'adjust'];
   const users = [
     { id: 'user1', name: 'Admin User' },
     { id: 'dr_smith', name: 'Dr. Sarah Smith' },

@@ -5,7 +5,13 @@
       "Bash(git commit:*)",
       "Bash(npm install:*)",
       "Bash(mkdir:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(cat:*)",
+      "Bash(git branch:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run serve:*)",
+      "Bash(npx vue-cli-service build:*)",
+      "Bash(git push:*)"
     ],
     "deny": []
   }

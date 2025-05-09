@@ -10,7 +10,7 @@ import {
 import { db } from '@/firebase/config';
 import { useAuthStore } from './auth';
 
-export type UserRole = 'admin' | 'provider' | 'nurse' | 'receptionist' | 'viewer';
+export type UserRole = 'admin' | 'provider' | 'nurse' | 'physician' | 'receptionist' | 'viewer';
 
 export interface UserProfile {
   id: string;
@@ -31,9 +31,15 @@ export const useUserProfileStore = defineStore('userProfile', {
   }),
   
   getters: {
+    currentUser: (state) => state.profile,
     userRole: (state) => state.profile?.role || 'viewer',
     
-    // Role-based permission checks
+    // Role check
+    hasRole: (state) => (roleName: UserRole) => {
+      return state.profile?.role === roleName;
+    },
+    
+    // Permission checks
     canViewPatients: (state) => {
       const role = state.profile?.role;
       return !!role; // All authenticated users can view patients
@@ -62,6 +68,15 @@ export const useUserProfileStore = defineStore('userProfile', {
     canViewAnalytics: (state) => {
       const role = state.profile?.role;
       return role === 'admin' || role === 'provider';
+    },
+    
+    canManageInventory: (state) => {
+      const role = state.profile?.role;
+      return role === 'admin' || role === 'nurse';
+    },
+
+    isAdmin: (state) => {
+      return state.profile?.role === 'admin';
     }
   },
   

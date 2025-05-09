@@ -197,17 +197,8 @@
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted } from 'vue';
 import { useUserProfileStore } from '@/stores/userProfile';
-import { usePatientStore, type Patient } from '@/stores/patients';
-import { 
-  collection, 
-  query, 
-  where, 
-  getDocs, 
-  orderBy, 
-  limit, 
-  Timestamp 
-} from 'firebase/firestore';
-import { db } from '@/firebase/config';
+import { usePatientStore } from '@/stores/patients';
+// Remove unused Firebase imports to fix linting errors
 
 interface Metrics {
   totalPatientsToday: number;
@@ -321,7 +312,7 @@ export default defineComponent({
     // Generate points for hourly volume chart
     const hourlyVolumePoints = computed(() => {
       const maxValue = Math.max(...hourlyVolume.value);
-      const points = [];
+      const points: string[] = [];
       
       // Available width and height for plotting
       const width = 100;  // percentage width
@@ -340,7 +331,7 @@ export default defineComponent({
     // List of point coordinates for adding circles
     const hourlyVolumePointsList = computed(() => {
       const maxValue = Math.max(...hourlyVolume.value);
-      const points = [];
+      const points: Array<{ x: string, y: number }> = [];
       
       const width = 100;
       const height = 200;

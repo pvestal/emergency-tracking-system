@@ -157,7 +157,12 @@ export const useLocationTrackingStore = defineStore('locationTracking', {
     // Create a default floor plan if none exists
     async createDefaultFloorPlan() {
       try {
-        const defaultAreas = [
+        // Define with correct types for the coordinates and positions
+        const defaultAreas: {
+          id: string; 
+          name: string; 
+          coordinates: [number, number, number, number];
+        }[] = [
           { id: 'waiting', name: 'Waiting Room', coordinates: [10, 10, 300, 200] },
           { id: 'triage', name: 'Triage', coordinates: [310, 10, 450, 200] },
           { id: 'treatment', name: 'Treatment Area', coordinates: [10, 210, 450, 500] },
@@ -165,7 +170,14 @@ export const useLocationTrackingStore = defineStore('locationTracking', {
           { id: 'admin', name: 'Administration', coordinates: [460, 210, 600, 500] }
         ];
         
-        const defaultCameras = [
+        const defaultCameras: {
+          id: string;
+          name: string;
+          position: [number, number];
+          rotation: number;
+          viewAngle: number;
+          isActive: boolean;
+        }[] = [
           { id: 'cam1', name: 'Entrance Camera', position: [50, 50], rotation: 45, viewAngle: 90, isActive: true },
           { id: 'cam2', name: 'Waiting Room Camera', position: [150, 100], rotation: 0, viewAngle: 90, isActive: true },
           { id: 'cam3', name: 'Triage Camera', position: [350, 100], rotation: 180, viewAngle: 90, isActive: true },
