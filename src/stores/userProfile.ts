@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia';
-import { 
-  doc, 
-  getDoc, 
-  setDoc, 
-  updateDoc, 
-  onSnapshot, 
-  serverTimestamp 
+import {
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  onSnapshot,
+  serverTimestamp,
+  collection,
+  getDocs
 } from 'firebase/firestore';
 import { db } from '@/firebase/config';
 import { useAuthStore } from './auth';
@@ -165,15 +167,67 @@ export const useUserProfileStore = defineStore('userProfile', {
     async updateUserRole(userId: string, role: UserRole) {
       this.loading = true;
       this.error = null;
-      
+
       try {
         const profileRef = doc(db, 'userProfiles', userId);
         await updateDoc(profileRef, { role });
+
+        // Add system activity record for the role change
+        try {
+          const activityRef = collection(db, 'systemActivity');
+          await setDoc(doc(activityRef), {
+            type: 'user',
+            message: `User role updated to ${role}`,
+            userId: userId,
+            updatedBy: this.profile?.id,
+            timestamp: serverTimestamp()
+          });
+        } catch (activityErr: any) {
+          console.error('Error recording role change activity:', activityErr);
+          // Non-critical error, don't throw
+        }
       } catch (err: any) {
         this.error = err.message;
         console.error('Error updating user role:', err);
       } finally {
         this.loading = false;
+      }
+    },
+
+    async promoteToAdmin(userId: string) {
+      return this.updateUserRole(userId, 'admin');
+    },
+
+    async removeAdminRole(userId: string) {
+      return this.updateUserRole(userId, 'viewer');
+    },
+
+    // Get a count of users by role
+    async getUserRoleCounts() {
+      try {
+        const usersRef = collection(db, 'userProfiles');
+        const snapshot = await getDocs(usersRef);
+
+        const counts: Record<string, number> = {
+          admin: 0,
+          provider: 0,
+          nurse: 0,
+          receptionist: 0,
+          viewer: 0
+        };
+
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          if (data.role && counts[data.role] !== undefined) {
+            counts[data.role]++;
+          }
+        });
+
+        return counts;
+      } catch (err: any) {
+        console.error('Error getting user role counts:', err);
+        this.error = err.message;
+        return null;
       }
     }
   }

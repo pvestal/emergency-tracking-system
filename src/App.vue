@@ -8,6 +8,7 @@
         <router-link v-if="userProfileStore.canViewAnalytics" to="/analytics">Analytics</router-link>
         <span v-if="userProfileStore.canViewAnalytics"> | </span>
         <router-link to="/about">About</router-link>
+        <router-link v-if="userProfileStore.canManageUsers" to="/admin" class="admin-link">| Admin Dashboard</router-link>
         <router-link v-if="userProfileStore.canManageUsers" to="/users" class="admin-link">| User Management</router-link>
         <router-link v-if="userProfileStore.canManageUsers" to="/integrations" class="admin-link">| Integrations</router-link>
         <div class="user-menu">

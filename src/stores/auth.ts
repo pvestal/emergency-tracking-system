@@ -25,6 +25,13 @@ export const useAuthStore = defineStore('auth', {
     isAuthenticated: (state) => !!state.user,
     userEmail: (state) => state.user?.email,
     userId: (state) => state.user?.uid,
+    isAdmin: () => {
+      // This getter requires the userProfile store
+      // Import it dynamically to avoid circular dependency
+      const { useUserProfileStore } = require('./userProfile');
+      const userProfileStore = useUserProfileStore();
+      return userProfileStore.canManageUsers;
+    },
   },
   
   actions: {
